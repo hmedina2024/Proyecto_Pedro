@@ -248,20 +248,6 @@ def procesar_actualizacion_contrato(data):
         print(f"Ocurrió un error en procesar_actualizar_contrato: {e}")
         return None
     
-# Eliminar OPeracion
-def eliminarOperacion(id_operacion):
-    try:
-        with connectionBD() as conexion_MySQLdb:
-            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "DELETE FROM tbl_operaciones WHERE id_operacion=%s"
-                cursor.execute(querySQL, (id_operacion,))
-                conexion_MySQLdb.commit()
-                resultado_eliminar = cursor.rowcount
-        return resultado_eliminar
-    except Exception as e:
-        print(f"Error en eliminar operacion : {e}")
-        return []
-    
 # Eliminar Contrato
 def eliminarContrato(id_contrato):
     try:

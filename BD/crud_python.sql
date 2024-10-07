@@ -52,3 +52,12 @@ CREATE TABLE `tbl_percepcion` (
   `usuario_registro` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_percepcion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `tbl_documentos` (
+  `id_documento` int NOT NULL AUTO_INCREMENT,
+  `id_contrato` int ,
+  `nombre_documento` varchar(100) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_registro` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
