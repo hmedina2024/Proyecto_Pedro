@@ -1,0 +1,179 @@
+{% extends 'public/base_cpanel.html' %}
+<!--Cambiando el title-->
+{% block title %}AconpiExpress | Registrar Operacion Diaria{% endblock %}
+<!---->
+{% block customCSS %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename ='assets/css/file.css') }}" />
+{% endblock %}
+
+<!--Inicio del block-->
+{% block body %}
+<!---->
+{% if (detalle_innovacion|length) %}
+<div class="card" style="border-radius: 0px !important">
+  <div class="row justify-content-center mb-header sticky-header">
+    <div class="col-md-12">
+      <h3 class="text-center mt-5 mb-3 fw-bold">
+        <a href="/lista-de-innovaciones">
+          <i class="bi bi-arrow-left-circle"></i>
+        </a>
+        INFORMACIÓN DE LA INNOVACIóN
+      </h3>
+      <hr />
+    </div>
+  </div>
+  <div class="row justify-content-center mb-1">
+    <div class="col-md-10">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <label for="id_innovacion" class="form-label fw-bold text-primary">
+              ID INNOVACION
+            </label>
+            <div class="form-control" readonly> {{detalle_innovacion.id_innovacion}} </div>
+          </div>                
+          <div class="col-md-9">
+            <label for="titulo_idea" class="form-label fw-bold text-primary">
+              Título de la Idea:
+            </label>
+            <div class="form-control" readonly>{{ detalle_innovacion.titulo_idea}}</div>            
+          </div>                   
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <label for="fecha_inicio" class="form-label fw-bold text-primary">
+              Fecha de Inicio del Proceso:
+            </label>
+            <div class="form-control" readonly> {{ detalle_innovacion.fecha_inicio}}  </div> <!-- Sin comillas dobles -->
+          </div>
+          <div class="col-md-8">
+            <label for="descripcion_idea" class="form-label fw-bold text-primary">
+              Descripción de la idea:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.descripcion_idea}}</textarea>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <label for="espacio_problema" class="form-label fw-bold text-primary">
+              Espacio del Problema:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.espacio_problema}}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label for="aspecto" class="form-label fw-bold text-primary">
+              Aspecto del negocio que afecta:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.aspecto}}</textarea>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <label for="roles" class="form-label fw-bold text-primary">
+              1. Definir roles de la empresa:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.roles}}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label for="estrategias" class="form-label fw-bold text-primary">
+              2. Selección de Estrategias:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.estrategias}}</textarea>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <label for="diseño" class="form-label fw-bold text-primary">
+              3. Diseño e innovación digital:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.diseño}}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label for="implementacion" class="form-label fw-bold text-primary">
+              4. Implementacion y Demostración:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.implementacion}}</textarea>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <label for="fecha_plazo" class="form-label fw-bold text-primary">
+              Fecha plazo de implementación:
+            </label>
+            <div class="form-control" readonly> {{ detalle_innovacion.fecha_plazo }}  </div> <!-- Sin comillas dobles -->
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-8">
+            <label for="evaluacion" class="form-label fw-bold text-primary">
+              4. Evaluación (Encuesta de percepción de la idea de Innovación digital):
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.evaluacion}}</textarea>
+          </div>
+          <div class="col-md-4">
+            <label for="aprender_planear" class="form-label fw-bold text-primary">
+              6. Diseñar, aprender y planear:
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.aprender_planear}}</textarea>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-8">
+            <label for="ajustes" class="form-label fw-bold text-primary">
+              Base de conocimiento (ajustes necesarios):
+            </label>
+            <textarea
+                class="form-control" readonly
+                rows="1">{{detalle_innovacion.ajustes}}</textarea>
+          </div>
+          <div class="col-md-4">
+            <label for="fecha_fin" class="form-label fw-bold text-primary">
+              Fecha Terminación del proceso:
+            </label>
+            <div class="form-control" readonly> {{ detalle_innovacion.fecha_fin }}  </div> <!-- Sin comillas dobles -->
+          </div> 
+        </div>
+        <div class="row mt-4">         
+          <div class="col-md-3">
+            <label for="fecha_registro" class="form-label fw-bold text-primary">
+              FECHA Y HORA REGISTRO
+            </label>
+            <div class="form-control" readonly>{{ detalle_innovacion.fecha_registro}}</div>
+          </div>           
+        <div class="col-md-3">
+          <label for="usuario_registro" class="form-label fw-bold text-primary">
+            Registrado por
+          </label>
+          <br />
+          <div class="form-control" readonly>{{ detalle_innovacion.usuario_registro}}</div> 
+        </div>               
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<h2 class="text-center">
+  No existe la innovación 😭
+  <hr />
+</h2>
+{% endif %} {% endblock %}
