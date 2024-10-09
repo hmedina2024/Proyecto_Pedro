@@ -31,7 +31,8 @@ CREATE TABLE `tbl_innovacion` (
   `aspecto` varchar(45) DEFAULT NULL,
   `roles` varchar(500) DEFAULT NULL,
   `estrategias` varchar(500) DEFAULT NULL,
-  `diseño` varchar(500) DEFAULT NULL,
+  `diseno` varchar(500) DEFAULT NULL,
+  `kim` varchar(500) DEFAULT NULL,
   `implementacion` varchar(500) DEFAULT NULL,
   `fecha_plazo` date DEFAULT NULL,
   `evaluacion` varchar(500) DEFAULT NULL,
@@ -45,6 +46,7 @@ CREATE TABLE `tbl_innovacion` (
 
 CREATE TABLE `tbl_percepcion` (
   `id_percepcion` int NOT NULL AUTO_INCREMENT,
+  `id_innovacion` int NOT NULL ,
   `tipo` varchar(100) NOT NULL,
   `pregunta` varchar(200) NOT NULL,
   `respuesta` int DEFAULT NULL,
@@ -61,3 +63,18 @@ CREATE TABLE `tbl_documentos` (
   `usuario_registro` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_documento`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+CREATE TABLE `tbl_kim` (
+  `id_kim` int NOT NULL,
+  `nombre_kim` varchar(100) NOT NULL,
+  `descripcion_kim` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+INSERT INTO `tbl_kim` (`id_kim`, `nombre_kim`, `descripcion_kim`) VALUES
+(1, 'Mejora', 'Automatización de procesos operativos, generación de alertas y reportes estratégicos para las partes interesadas'),
+(2, 'Invención', 'Desarrollar un artefacto que permita centralizar los datos dispersos en el servidor de archivos'),
+(3, 'Explotación', 'Uso apropiado del CRM, paquete contable, inteligencia de negocios e inteligencia artificial'),
+(4, 'Exaptación', 'Innovación limitada para el uso del CRM y seguimiento a proyectos de TI');

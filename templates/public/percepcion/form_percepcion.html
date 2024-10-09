@@ -17,8 +17,8 @@
   <div class="row justify-content-center mb-2 header sticky-header">
     <!-- Asegúrate de que el header tenga la clase sticky-header -->
     <div class="col-md-12">
-      <h3 class="text-center mt-5 mb-3 fw-bold">ENCUESTA DE PERCEPCIóN DE
-        INNOVACIóN DIGITAL</h3>
+      <h3 class="text-center mt-5 mb-3 fw-bold">ENCUESTA DE EXPECTATIVAS DE USO
+        DEL PMID</h3>
       <hr />
     </div>
   </div>
@@ -47,155 +47,176 @@
                 <li>Totalmente de acuerdo.</li>
               </ol>
             </div>
-            <br>
-            <!-- Pregunta 1: Performance Expectancy -->
-            <label for="titulo" class="form-data fw-bold text-primary"
-              style="color: blue;">
-              1. Performance Expectancy (Expectativa de Rendimiento):
-            </label>
             <div class="row mt-4">
-              <div class="d-flex align-items-center">
-                <div class="me-4"
-                  style="text-decoration-color: #d9410f; margin-left: 20px; color: black;">
-                  <p><strong>-El uso de la idea de innovación mejorará mi
-                      eficiencia en las tareas relacionadas con el
-                      proceso.</strong></p>
-                </div>
-
-                <div class="d-flex">
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="1"> <span
-                      class="ms-2">1</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="2"> <span
-                      class="ms-2">2</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="3"> <span
-                      class="ms-2">3</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="4"> <span
-                      class="ms-2">4</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="5"> <span
-                      class="ms-2">5</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="6"> <span
-                      class="ms-2">6</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta1" value="7"> <span
-                      class="ms-2">7</span></label>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mt-4">
-              <div class="d-flex align-items-center">
-                <div class="me-4"
-                  style="text-decoration-color: #d9410f; margin-left: 20px; color: black;">
-                  <p><strong>-La implementación de la nueva tecnología digital
-                      aumentará la calidad de los resultados de la
-                      empresa.</strong></p>
-                </div>
-
-                <div class="d-flex">
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="1"> <span
-                      class="ms-2">1</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="2"> <span
-                      class="ms-2">2</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="3"> <span
-                      class="ms-2">3</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="4"> <span
-                      class="ms-2">4</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="5"> <span
-                      class="ms-2">5</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="6"> <span
-                      class="ms-2">6</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta2" value="7"> <span
-                      class="ms-2">7</span></label>
-                </div>
+              <div class="col-md-6">
+                <label for="id_innovacion"
+                  class="form-label fw-bold text-primary">
+                  Título Plan de Mejora e Innovación Digital:
+                </label>
+                <select class="form-control" name="id_innovacion"
+                  id="id_innovacion" required>
+                  <option value>Seleccione una opción</option>
+                  {% for innovacion in innovaciones %}
+                  <option value="{{ innovacion.id_innovacion }}">{{
+                    innovacion.titulo_idea }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
             <br>
 
-            <!-- Pregunta 2: Effort Expectancy -->
+            <!-- Sección 1: Espectativa de Rendimiento -->
             <label for="titulo" class="form-data fw-bold text-primary"
               style="color: blue;">
-              2. Effort Expectancy (Expectativa de Esfuerzo):
+              1. Espectativa de Rendimiento:
             </label>
-            <div class="row mt-4">
-              <div class="d-flex align-items-center">
-                <div class="me-4"
-                  style="text-decoration-color: #d9410f; margin-left: 20px; color: black;">
-                  <p><strong>-Aprender a utilizar la nueva tecnología digital
-                      implementada en el proceso de innovación es
-                      fácil.</strong></p>
-                </div>
 
-                <div class="d-flex">
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="1"> <span
-                      class="ms-2">1</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="2"> <span
-                      class="ms-2">2</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="3"> <span
-                      class="ms-2">3</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="4"> <span
-                      class="ms-2">4</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="5"> <span
-                      class="ms-2">5</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="6"> <span
-                      class="ms-2">6</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta3" value="7"> <span
-                      class="ms-2">7</span></label>
-                </div>
+            <!-- Pregunta 1 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- La implementación del PMID me permitirá ser
+                    eficiente en mi desempeño laboral.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta1" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
               </div>
             </div>
 
-            <div class="row mt-4">
-              <div class="d-flex align-items-center">
-                <div class="me-4"
-                  style="text-decoration-color: #d9410f; margin-left: 20px; color: black;">
-                  <p><strong>-Me siento comod@ utilizando la nueva tecnología
-                      digital para completar las tareas asignadas en el proceso
-                      de innovación.</strong></p>
-                </div>
+            <!-- Pregunta 2 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Me siento comprometido con la implementación del
+                    PMID; esto me ayudará a mejorar la calidad de mi
+                    trabajo.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta2" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
 
-                <div class="d-flex">
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="1"> <span
-                      class="ms-2">1</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="2"> <span
-                      class="ms-2">2</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="3"> <span
-                      class="ms-2">3</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="4"> <span
-                      class="ms-2">4</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="5"> <span
-                      class="ms-2">5</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="6"> <span
-                      class="ms-2">6</span></label>
-                  <label class="me-4 d-flex align-items-center"><input
-                      type="radio" name="pregunta4" value="7"> <span
-                      class="ms-2">7</span></label>
-                </div>
+            <!-- Sección 2: Expectativa de Esfuerzo -->
+            <label for="titulo" class="form-data fw-bold text-primary"
+              style="color: blue;">
+              2. Expectativa de Esfuerzo:
+            </label>
+
+            <!-- Pregunta 3 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Aprendiendo y usando el PMID con todas sus
+                    características, cumpliré fácilmente mis
+                    tareas.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta3" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Me siento satisfecho utilizando la propuesta
+                    implementada en el PMID y poder cumplir con todas mis tareas
+                    a tiempo.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta4" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Sección 3: Condiciones Facilitadoras -->
+            <label for="titulo" class="form-data fw-bold text-primary"
+              style="color: blue;">
+              3. Condiciones Facilitadoras:
+            </label>
+
+            <!-- Pregunta 5 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Creo que existe apoyo organizacional para el uso
+                    del PMID en mis tareas laborales.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta5" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Dispongo de los recursos necesarios para utilizar
+                    el PMID en mi trabajo diario.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta6" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Sección 4: Actitud para el uso de la idea de Innovación -->
+            <label for="titulo" class="form-data fw-bold text-primary"
+              style="color: blue;">
+              4. Actitud para el uso de la idea de Innovación:
+            </label>
+
+            <!-- Pregunta 7 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Tengo una actitud positiva para adoptar el
+                    PMID.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta7" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Pregunta 8 -->
+            <div class="row mt-4 align-items-center">
+              <div class="col-md-8">
+                <p><strong>- Considero beneficioso el PMID para mi empresa; le
+                    ayudará a seguir siendo más competitiva.</strong></p>
+              </div>
+              <div class="col-md-4 d-flex justify-content-around">
+                {% for i in range(1, 8) %}
+                <label class="d-flex align-items-center">
+                  <input type="radio" name="pregunta8" value="{{ i }}" required>
+                  <span class="ms-1">{{ i }}</span>
+                </label>
+                {% endfor %}
               </div>
             </div>
 
@@ -205,8 +226,10 @@
                 <i class="bi bi-arrow-clockwise"></i>
               </button>
             </div>
-          </form>
+          </div>
         </div>
-      </body>
-    </html>
-    {% endblock %}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

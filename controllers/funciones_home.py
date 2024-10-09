@@ -127,7 +127,7 @@ def procesar_form_contratos(dataForm, request):
         return f'Se produjo un error en procesar_form_contratos: {str(e)}', 500
     
     
-def sql_lista_contratosBD():
+def sql_lista_contratosBD(search_term=''):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
@@ -142,10 +142,17 @@ def sql_lista_contratosBD():
                         c.fecha_fin,
                         c.fecha_registro
                     FROM tbl_contratos as c
-                    ORDER BY fecha_registro DESC
+                """
+                params = []
+                if search_term:
+                    querySQL += """
+                        WHERE c.razon_social LIKE %s OR c.objeto_contractual LIKE %s
                     """
-                cursor.execute(querySQL)
-                contratosBD = cursor.fetchall()  # Devuelve la lista de contratos
+                    like_term = f"%{search_term}%"
+                    params.extend([like_term, like_term])
+                querySQL += " ORDER BY fecha_registro DESC"
+                cursor.execute(querySQL, params)
+                contratosBD = cursor.fetchall()
         return contratosBD
     except Exception as e:
         print(f"Error en la función sql_lista_contratosBD: {e}")
@@ -269,7 +276,7 @@ def procesar_form_innovaciones(dataForm):
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
 
-                sql = ("INSERT INTO tbl_innovacion (titulo_idea, fecha_inicio, descripcion_idea, espacio_problema, aspecto, roles, estrategias, diseño, implementacion,fecha_plazo, evaluacion, aprender_planear, ajustes, fecha_fin, usuario_registro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                sql = ("INSERT INTO tbl_innovacion (titulo_idea, fecha_inicio, descripcion_idea, espacio_problema, aspecto, roles, estrategias, diseno,kim, implementacion,fecha_plazo, evaluacion, aprender_planear, ajustes, fecha_fin, usuario_registro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)")
 
                 # Creando una tupla con los valores del INSERT
                 valores = (
@@ -280,7 +287,8 @@ def procesar_form_innovaciones(dataForm):
                     dataForm.get('afecta'),
                     dataForm.get('definir_role'),
                     dataForm.get('estrategias'),
-                    dataForm.get('diseño'),
+                    dataForm.get('diseno'),
+                    dataForm.get('kim'),
                     dataForm.get('implementacion'),
                     dataForm.get('date_implementacion'),
                     dataForm.get('evaluacion'),
@@ -342,7 +350,8 @@ def sql_lista_innovacionesBD():
                         `aspecto`,
                         `roles`,
                         `estrategias`,
-                        `diseño`,
+                        `diseno`,
+                        `kim`,
                         `implementacion`,
                         `fecha_plazo`,
                         `evaluacion`,
@@ -376,7 +385,8 @@ def sql_detalles_innovacionesBD(id_innovacion):
                         `aspecto`,
                         `roles`,
                         `estrategias`,
-                        `diseño`,
+                        `diseno`,
+                        `kim`,
                         `implementacion`,
                         `fecha_plazo`,
                         `evaluacion`,
@@ -396,6 +406,71 @@ def sql_detalles_innovacionesBD(id_innovacion):
         print(
             f"Errro en la función sql_detalles_innovacionesBD: {e}")
         return None
+    
+def actualizar_innovacionBD(
+    id_innovacion,
+    titulo_idea,
+    fecha_inicio,
+    descripcion_idea,
+    espacio_problema,
+    aspecto,
+    roles,
+    estrategias,
+    diseno,
+    kim,
+    implementacion,
+    fecha_plazo,
+    evaluacion,
+    aprender_planear,
+    ajustes,
+    fecha_fin
+):
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor() as cursor:
+                querySQL = """
+                    UPDATE bd_contratos.tbl_innovacion
+                    SET 
+                        titulo_idea = %s,
+                        fecha_inicio = %s,
+                        descripcion_idea = %s,
+                        espacio_problema = %s,
+                        aspecto = %s,
+                        roles = %s,
+                        estrategias = %s,
+                        diseno = %s,
+                        kim = %s,
+                        implementacion = %s,
+                        fecha_plazo = %s,
+                        evaluacion = %s,
+                        aprender_planear = %s,
+                        ajustes = %s,
+                        fecha_fin = %s
+                    WHERE id_innovacion = %s
+                """
+                cursor.execute(querySQL, (
+                    titulo_idea,
+                    fecha_inicio,
+                    descripcion_idea,
+                    espacio_problema,
+                    aspecto,
+                    roles,
+                    estrategias,
+                    diseno,
+                    kim,
+                    implementacion,
+                    fecha_plazo,
+                    evaluacion,
+                    aprender_planear,
+                    ajustes,
+                    fecha_fin,
+                    id_innovacion
+                ))
+                conexion_MySQLdb.commit()
+        return True
+    except Exception as e:
+        print(f"Error al actualizar la innovación: {e}")
+        return False
 
 
 # Eliminar Innovación
@@ -415,24 +490,36 @@ def eliminarInnovacion(id_innovacion):
     
     
 ## PERCEPCION
-def procesar_form_percepcion(dataForm):
+def procesar_form_percepcion(dataForm, id_innovacion):
     try:
         with connectionBD() as conexion_MySQLdb:
-            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
+            with conexion_MySQLdb.cursor() as cursor:
 
-                sql = ("INSERT INTO tbl_percepcion (tipo, pregunta, respuesta, usuario_registro) VALUES (%s, %s, %s, %s)")
+                sql = ("INSERT INTO tbl_percepcion (id_innovacion, tipo, pregunta, respuesta, usuario_registro) VALUES (%s, %s, %s, %s, %s)")
 
                 # Definir los grupos y las preguntas
                 tipos_preguntas = {
-                    'Performance Expectancy': {
-                        'pregunta1': '-El uso de la idea de innovación mejorará mi eficiencia en las tareas relacionadas con el proceso.',
-                        'pregunta2': '-La implementación de la nueva tecnología digital aumentará la calidad de los resultados de la empresa.'
+                    'Espectativa de Rendimiento': {
+                        'pregunta1': 'La implementación del PMID me permitirá ser eficiente en mi desempeño laboral.',
+                        'pregunta2': 'Me siento comprometido con la implementación del PMID; esto me ayudará a mejorar la calidad de mi trabajo.'
                     },
-                    'Effort Expectancy': {
-                        'pregunta3': '-Aprender a utilizar la nueva tecnología digital implementada en el proceso de innovación es fácil.',
-                        'pregunta4': '-Me siento comod@ utilizando la nueva tecnología digital para completar las tareas asignadas en el proceso de innovación.'
+                    'Expectativa de Esfuerzo': {
+                        'pregunta3': 'Aprendiendo y usando el PMID con todas sus características, cumpliré fácilmente mis tareas.',
+                        'pregunta4': 'Me siento satisfecho utilizando la propuesta implementada en el PMID y poder cumplir con todas mis tareas a tiempo.'
+                    },
+                    'Condiciones Facilitadoras': {
+                        'pregunta5': 'Creo que existe apoyo organizacional para el uso del PMID en mis tareas laborales.',
+                        'pregunta6': 'Dispongo de los recursos necesarios para utilizar el PMID en mi trabajo diario.'
+                    },
+                    'Actitud para el uso de la idea de Innovación': {
+                        'pregunta7': 'Tengo una actitud positiva para adoptar el PMID.',
+                        'pregunta8': 'Considero beneficioso el PMID para mi empresa; le ayudará a seguir siendo más competitiva.'
                     }
                 }
+
+                # Verificar que id_innovacion es válido
+                if not id_innovacion:
+                    raise ValueError("No se ha seleccionado ninguna innovación.")
 
                 # Recorrer las preguntas y almacenar sus respuestas
                 for tipo, preguntas in tipos_preguntas.items():
@@ -440,9 +527,10 @@ def procesar_form_percepcion(dataForm):
                         respuesta = dataForm.get(key)
                         if respuesta:  # Solo guardar si la respuesta existe
                             valores = (
-                                tipo,  # Tipo de pregunta (grupo)
-                                pregunta,  # Pregunta específica
-                                respuesta,  # Respuesta del usuario
+                                id_innovacion,  # ID de la innovación seleccionada
+                                tipo,           # Tipo de pregunta (grupo)
+                                pregunta,       # Pregunta específica
+                                respuesta,      # Respuesta del usuario
                                 session.get('name_surname')  # Nombre del usuario
                             )
 
@@ -466,13 +554,15 @@ def sql_lista_percepcionesBD():
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
                 querySQL = """
                     SELECT 
-                        id_percepcion,
-                        tipo, 
-                        pregunta, 
-                        respuesta, 
-                        fecha_registro,
-                        usuario_registro
-                        FROM bd_contratos.tbl_percepcion
+                        P.id_percepcion,
+                        P.tipo, 
+                        P.pregunta, 
+                        P.respuesta, 
+                        P.fecha_registro,
+                        P.usuario_registro,
+                        I.titulo_idea
+                        FROM bd_contratos.tbl_percepcion AS P
+                        LEFT JOIN bd_contratos.tbl_innovacion AS I ON I.id_innovacion=P.id_innovacion 
                         ORDER BY fecha_registro DESC,tipo DESC, pregunta DESC
                     """
                 cursor.execute(querySQL)
@@ -494,5 +584,22 @@ def eliminarPercepcion(id_percepcion):
         return resultado_eliminar
     except Exception as e:
         print(f"Error en eliminar el registro : {e}")
-        return []   
+        return []  
+    
+def obtener_innovaciones():
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
+                querySQL = """
+                    SELECT 
+                        id_innovacion,
+                        titulo_idea
+                    FROM bd_contratos.tbl_innovacion
+                """
+                cursor.execute(querySQL)
+                innovaciones = cursor.fetchall()
+        return innovaciones
+    except Exception as e:
+        print(f"Error al obtener innovaciones: {e}")
+        return []
     

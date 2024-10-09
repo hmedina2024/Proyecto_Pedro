@@ -56,7 +56,8 @@ def viewFormContratos():
 @app.route('/lista-de-contratos', methods=['GET'])
 def lista_contratos():
     if 'conectado' in session:
-        contratos = sql_lista_contratosBD()
+        search_term = request.args.get('search', '')
+        contratos = sql_lista_contratosBD(search_term)
         return render_template('public/contratos/lista_contratos.html', contratos=contratos)
     else:
         flash('Primero debes iniciar sesión.', 'error')
@@ -149,16 +150,58 @@ def lista_innovaciones():
         flash('primero debes iniciar sesión.', 'error')
         return redirect(url_for('inicio'))
     
-@app.route("/detalles-innovacion/<string:id_innovacion>", methods=['GET'])
+@app.route("/detalles-innovacion/<string:id_innovacion>", methods=['GET', 'POST'])
 def detalleInnovacion(id_innovacion=None):
     if 'conectado' in session:
-        # Verificamos si el parámetro id_jornada es None o no está presente en la URL
         if id_innovacion is None:
             return redirect(url_for('inicio'))
         else:
-            print(f"ID de Innovación recibido: {id_innovacion}")
-            detalle_innovacion = sql_detalles_innovacionesBD(id_innovacion) or []
-            return render_template('public/innovacion/detalles_innovacion.html', detalle_innovacion=detalle_innovacion)
+            if request.method == 'POST':
+                # Procesar los datos del formulario
+                titulo_idea = request.form['titulo_idea']
+                fecha_inicio = request.form['fecha_inicio']
+                descripcion_idea = request.form['descripcion_idea']
+                espacio_problema = request.form['espacio_problema']
+                aspecto = request.form['aspecto']
+                roles = request.form['roles']
+                estrategias = request.form['estrategias']
+                diseno = request.form['diseno']
+                kim = request.form['kim']
+                implementacion = request.form['implementacion']
+                fecha_plazo = request.form['fecha_plazo']
+                evaluacion = request.form['evaluacion']
+                aprender_planear = request.form['aprender_planear']
+                ajustes = request.form['ajustes']
+                fecha_fin = request.form['fecha_fin']
+                # Actualizar la innovación en la base de datos
+                resultado = actualizar_innovacionBD(
+                    id_innovacion,
+                    titulo_idea,
+                    fecha_inicio,
+                    descripcion_idea,
+                    espacio_problema,
+                    aspecto,
+                    roles,
+                    estrategias,
+                    diseno,
+                    kim,
+                    implementacion,
+                    fecha_plazo,
+                    evaluacion,
+                    aprender_planear,
+                    ajustes,
+                    fecha_fin
+                )
+                if resultado:
+                    flash('Innovación actualizada correctamente.', 'success')
+                else:
+                    flash('Ocurrió un error al actualizar la innovación.', 'error')
+                # Obtener los detalles actualizados
+                detalle_innovacion = sql_detalles_innovacionesBD(id_innovacion) or []
+                return render_template('public/innovacion/detalles_innovacion.html', detalle_innovacion=detalle_innovacion)
+            else:
+                detalle_innovacion = sql_detalles_innovacionesBD(id_innovacion) or []
+                return render_template('public/innovacion/detalles_innovacion.html', detalle_innovacion=detalle_innovacion)
     else:
         flash('Primero debes iniciar sesión.', 'error')
         return redirect(url_for('inicio'))
@@ -183,16 +226,20 @@ def viewFormPercepcion():
     if request.method == 'POST':
         dataForm = request.form
         try:
-            resultado = procesar_form_percepcion(dataForm)
+            # Obtener el id_innovacion del formulario
+            id_innovacion = dataForm.get('id_innovacion')
+            resultado = procesar_form_percepcion(dataForm, id_innovacion)
             if isinstance(resultado, int) and resultado > 0:
                 flash('Percepción registrada exitosamente.', 'success')
-                return redirect(url_for('lista_percepcion'))  # Reemplaza 'success_page' con la ruta adecuada
+                return redirect(url_for('lista_percepcion'))  # Reemplaza 'lista_percepcion' con la ruta adecuada
             else:
                 flash('No se pudo registrar la percepción.', 'error')
         except Exception as e:
             flash(f'Error al registrar la percepción: {e}', 'error')
     
-    return render_template('public/percepcion/form_percepcion.html')
+    # Método GET: obtener las innovaciones y renderizar el formulario
+    innovaciones = obtener_innovaciones()
+    return render_template('public/percepcion/form_percepcion.html', innovaciones=innovaciones)
 
 
 @app.route('/lista-percepcion', methods=['GET'])

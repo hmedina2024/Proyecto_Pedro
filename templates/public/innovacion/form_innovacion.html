@@ -33,7 +33,7 @@
         <div class="row">
           <div class="col-md-8">
             <label for="titulo" class="form-label fw-bold text-primary">
-              Título de la Idea:
+              Título Plan de mejora e innovación Digital:
             </label>
             <input
               class="form-control"
@@ -45,7 +45,7 @@
           <!-- Campo de fecha -->
           <div class="col-md-4">
             <label for="date_inicio" class="form-label fw-bold text-primary">
-              Fecha de Inicio del Proceso:
+              Fecha de Inicio del PMID:
             </label>
             <input
               class="form-control"
@@ -56,7 +56,7 @@
           <div class="col-md-6">
             <br />
             <label for="idea" class="form-label fw-bold text-primary">
-              Descripción de la idea:
+              Descripción del PMID:
             </label>
             <textarea
               class="form-control"
@@ -103,17 +103,37 @@
               name="estrategias"
               rows="2"></textarea>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-12">
             <br />
-            <label for="diseño" class="form-label fw-bold text-primary">
-              3. Diseño e innovación digital:
+            <label for="diseno" class="form-label fw-bold text-primary">
+              3. Diseño del PMID:
             </label>
             <textarea
               class="form-control"
-              name="diseño"
+              name="diseno"
               rows="2"></textarea>
           </div>
-          <div class="col-md-6">
+          <!-- Nueva Lista Desplegable -->
+          <div class="col-md-12">
+            <br />
+            <label for="kim" class="form-label fw-bold text-primary">
+              seleccione la estrategia de la matriz del conocimiento (KIM):
+            </label>
+            <select class="form-control" name="kim" id="kim" required>
+              <option value="">Seleccione una opción</option>
+              {% set opciones = [
+                  "Automatización de procesos operativos, generación de alertas y reportes estratégicos para las partes interesadas",
+                  "Desarrollar un artefacto que permita centralizar los datos dispersos en el servidor de archivos",
+                  "Uso apropiado del CRM, paquete contable, inteligencia de negocios e inteligencia artificial",
+                  "Innovación limitada para el uso del CRM y seguimiento a proyectos de TI"
+              ] %}
+              
+              {% for opcion in opciones %}
+                  <option value="{{ opcion }}">{{ opcion }}</option>
+              {% endfor %}
+          </select>
+          </div>
+          <div class="col-md-12">
             <br />
             <label for="implementacion" class="form-label fw-bold text-primary">
               4. Implementacion y Demostración:
@@ -169,7 +189,7 @@
           <div class="col-md-4">
             <br />
             <label for="date_fin" class="form-label fw-bold text-primary">
-              Fecha Terminación del proceso:
+              Fecha del PMID:
             </label>
             <input
               class="form-control"

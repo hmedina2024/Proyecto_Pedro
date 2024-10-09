@@ -30,6 +30,8 @@
               <th
               style="position: sticky; top: 0; background: #395c83; color: white; z-index: 1; width: 100px;">TIPO</th>
               <th
+              style="position: sticky; top: 0; background: #395c83; color: white; z-index: 1; width: 100px;">INNOVACION</th>
+              <th
                 style="position: sticky; top: 0; background: #395c83; color: white; z-index: 1; width: 300px;">PREGUNTA</th>
               <th
                 style="position: sticky; top: 0; background: #395c83; color: white; z-index: 1; width: 50px;">RESPUESTA</th>
@@ -47,6 +49,7 @@
             <tr id="percepcion_{{ percepcion.id_percepcion }}">
               <td>{{ loop.index }}</td>
               <td>{{ percepcion.tipo }}</td>
+              <td>{{ percepcion.titulo_idea }}</td>
               <td
                 style="max-width: 200px; word-wrap: break-word; overflow: hidden; text-overflow: ellipsis;">{{
                 percepcion.pregunta }}</td>
